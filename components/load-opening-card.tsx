@@ -15,7 +15,7 @@ export function LoadOpeningCard({
 }: LoadOpeningCardProps) {
   return (
     <div className="rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-gray-100">
-      <div className="p-6 space-y-6">
+      <div className="p-2 space-y-6">
         <div className="rounded-xl bg-gray-50/80 p-6 border border-gray-100">
           <ul className="space-y-3">
             {[

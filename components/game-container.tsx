@@ -41,7 +41,7 @@ export function GameContainer() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_400px] md:grid-cols-1 w-full max-w-full overflow-hidden">
+    <div className="grid gap-2 lg:grid-cols-[1fr_400px] md:grid-cols-1 w-full max-w-full overflow-hidden">
       <div className="space-y-4 min-w-0 w-full">
         <ChessBoard 
           gameState={gameState} 
