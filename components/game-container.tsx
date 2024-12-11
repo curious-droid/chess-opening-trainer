@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { PgnUploadForm } from '@/components/pgn-upload-form'
 import { ChessBoard } from '@/components/chess-board'
 import { GameState, UploadFormData } from '@/types/chess'
 import { parsePgn } from '@/utils/chess'
 import toast from 'react-hot-toast'
-import { Button } from '@/components/ui/button'
+import { LoadOpeningCard } from '@/components/load-opening-card'
 
 export function GameContainer() {
   const [gameState, setGameState] = useState<GameState | null>(null)
@@ -51,32 +50,11 @@ export function GameContainer() {
         />
       </div>
       <div className="space-y-4">
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4">
-          <h3 className="font-medium mb-2">Load Opening</h3>
-          <div className="space-y-4">
-            <div className="rounded-lg bg-muted p-4 mb-4">
-              <h4 className="font-medium mb-2">Instructions</h4>
-              <ul className="text-sm text-muted-foreground space-y-2">
-                <li>• Upload or paste a PGN file of the opening you want to practice</li>
-                <li>• Choose which color you want to play as</li>
-                <li>• You get 3 attempts for each move</li>
-                <li>• After 3 wrong attempts, the correct move will be shown</li>
-                <li>• Practice until you can complete the opening without mistakes!</li>
-              </ul>
-            </div>
-            <PgnUploadForm 
-              onSubmit={() => {}} 
-              onChange={handlePgnChange}
-            />
-            <Button 
-              onClick={handleStartTraining}
-              disabled={!pendingPgn.pgn}
-              className="w-full"
-            >
-              Start Training
-            </Button>
-          </div>
-        </div>
+        <LoadOpeningCard
+          onPgnChange={handlePgnChange}
+          onStartTraining={handleStartTraining}
+          isPgnValid={!!pendingPgn.pgn}
+        />
       </div>
     </div>
   )
