@@ -26,7 +26,6 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>
 
 interface PgnUploadFormProps {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSubmit: (data: UploadFormData) => void
   onChange?: (data: Partial<UploadFormData>) => void
 }

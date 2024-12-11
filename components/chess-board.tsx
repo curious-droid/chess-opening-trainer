@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import { useEffect, useState, Dispatch, SetStateAction, useCallback } from 'react'
 import { Chessboard } from 'react-chessboard'
-import { Chess, Square, Piece } from 'chess.js'
+import type { Square as ChessboardSquare } from 'react-chessboard/dist/chessboard/types'
+import { Chess } from 'chess.js'
 import { Button } from '@/components/ui/button'
 import { GameState } from '@/types/chess'
 import { validateMove } from '@/utils/chess'
@@ -23,6 +24,14 @@ export function ChessBoard({ gameState, setGameState, isPracticeMode }: ChessBoa
   const [boardOrientation, setBoardOrientation] = useState<'white' | 'black'>('white')
   const [currentAttempts, setCurrentAttempts] = useState(3)
   const [showingCorrectMove, setShowingCorrectMove] = useState(false)
+
+  const handleGameOver = useCallback(() => {
+    setGameState(prev => {
+      if (!prev) return prev
+      return { ...prev, isGameOver: true }
+    })
+    toast.success('Training complete!')
+  }, [setGameState])
 
   // Initialize the board and load PGN
   useEffect(() => {
@@ -63,47 +72,52 @@ export function ChessBoard({ gameState, setGameState, isPracticeMode }: ChessBoa
       }
 
       setIsLoading(false)
-    } catch (error) {
+    } catch {
       toast.error('Invalid PGN format')
       setGameState(null)
     }
-  }, [gameState?.pgn, gameState?.playerColor, gameState?.currentMoveIndex])
+  }, [gameState, setGameState])
 
   // Handle computer moves
   useEffect(() => {
     if (!isPlayerTurn && game && gameState && !gameState.isGameOver) {
-      const timer = setTimeout(makeComputerMove, 500)
-      return () => clearTimeout(timer)
-    }
-  }, [isPlayerTurn, game, gameState])
-
-  function makeComputerMove() {
-    if (!game || !gameState) return
+      const makeComputerMove = () => {
+        if (!game || !gameState) return
 
     if (gameState.currentMoveIndex >= allMoves.length) {
       handleGameOver()
       return
     }
 
-    try {
-      const nextMove = allMoves[gameState.currentMoveIndex]
-      game.move(nextMove)
-      setCurrentPosition(game.fen())
-      setGameState(prev => {
-        if (!prev) return prev
-        return {
-          ...prev,
-          currentMoveIndex: prev.currentMoveIndex + 1
+        try {
+          const nextMove = allMoves[gameState.currentMoveIndex]
+          game.move(nextMove)
+          setCurrentPosition(game.fen())
+          setGameState(prev => {
+            if (!prev) return prev
+            return {
+              ...prev,
+              currentMoveIndex: prev.currentMoveIndex + 1
+            }
+          })
+          setIsPlayerTurn(true)
+        } catch {
+          toast.error('Invalid move in PGN')
+          setGameState(null)
         }
-      })
-      setIsPlayerTurn(true)
-    } catch (error) {
-      toast.error('Invalid move in PGN')
-      setGameState(null)
-    }
-  }
+      }
 
-  function onDrop(sourceSquare: any, targetSquare: any) {
+      const timer = setTimeout(makeComputerMove, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [isPlayerTurn, game, gameState, allMoves, setGameState, setCurrentPosition, setIsPlayerTurn, handleGameOver])
+
+  function onDrop(
+    sourceSquare: ChessboardSquare,
+    targetSquare: ChessboardSquare,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _piece: Piece
+  ): boolean {
     if (!isPracticeMode || !game || !gameState || !isPlayerTurn) return false
     
     if (showingCorrectMove) {
@@ -174,18 +188,10 @@ export function ChessBoard({ gameState, setGameState, isPracticeMode }: ChessBoa
         }
         return false
       }
-    } catch (error) {
+    } catch {
       toast.error('Invalid move')
       return false
     }
-  }
-
-  function handleGameOver() {
-    setGameState(prev => {
-      if (!prev) return prev
-      return { ...prev, isGameOver: true }
-    })
-    toast.success('Training complete!')
   }
 
   function handleReset() {
