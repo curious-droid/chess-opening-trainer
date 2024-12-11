@@ -1,7 +1,9 @@
 'use client'
+
 import { Suspense } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { GameContainer } from '@/components/game-container'
+import { ErrorBoundary } from '@/components/error-boundary'
 
 export default function Home() {
   return (
@@ -12,7 +14,21 @@ export default function Home() {
         </CardHeader>
         <CardContent>
           <Suspense fallback={<div>Loading...</div>}>
-            <GameContainer />
+            <ErrorBoundary
+              fallback={
+                <div className="p-4 text-red-500">
+                  Something went wrong with the chess board. 
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="ml-2 underline"
+                  >
+                    Reload
+                  </button>
+                </div>
+              }
+            >
+              <GameContainer />
+            </ErrorBoundary>
           </Suspense>
         </CardContent>
       </Card>
