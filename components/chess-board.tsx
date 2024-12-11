@@ -225,9 +225,9 @@ export function ChessBoard({ gameState, setGameState, isPracticeMode }: ChessBoa
         />
       </div>
       {isPracticeMode && gameState && (
-        <div className="rounded-xl bg-white/90 backdrop-blur-sm p-6 border border-gray-100 shadow-lg">
-          <div className="grid grid-cols-2 gap-8">
-            <div className="grid grid-cols-2 gap-6">
+        <div className="rounded-xl bg-white/90 backdrop-blur-sm p-2 border border-gray-100 shadow-lg">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2">
               {[
                 { label: 'Correct moves', value: gameState.correctMoves, color: 'text-emerald-600' },
                 { label: 'Wrong moves', value: gameState.wrongMoves, color: 'text-rose-600' },

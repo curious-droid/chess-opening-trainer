@@ -10,7 +10,7 @@ export default function Home() {
     <main className="container mx-auto px-1 py-1 max-w-4xl">
       <Card className="mx-auto w-full">
         <CardHeader className="text-center">
-          <CardHeader className="text-center space-y-4 py-8">
+          <CardHeader className="text-center space-y-4 py-2">
             <div className="space-y-2">
               <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent">
                 Chess Opening Trainer
@@ -22,7 +22,7 @@ export default function Home() {
             </p>
           </CardHeader>
         </CardHeader>
-        <CardContent className="p-4">
+        <CardContent className="p-2">
           <Suspense fallback={<div>Loading...</div>}>
             <ErrorBoundary
               fallback={
