@@ -210,7 +210,7 @@ export function ChessBoard({ gameState, setGameState, isPracticeMode }: ChessBoa
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl overflow-hidden shadow-2xl">
+      <div className="rounded-xl overflow-hidden shadow-lg">
         <Chessboard
           position={currentPosition}
           onPieceDrop={onDrop}
