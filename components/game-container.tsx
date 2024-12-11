@@ -36,7 +36,7 @@ export function GameContainer() {
         attemptsLeft: 3,
         isGameOver: false
       })
-    } catch (error) {
+    } catch {
       toast.error('Invalid PGN format. Please check your input.')
     }
   }

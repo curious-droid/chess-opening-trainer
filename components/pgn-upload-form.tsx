@@ -26,11 +26,12 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>
 
 interface PgnUploadFormProps {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSubmit: (data: UploadFormData) => void
   onChange?: (data: Partial<UploadFormData>) => void
 }
 
-export function PgnUploadForm({ onSubmit, onChange }: PgnUploadFormProps) {
+export function PgnUploadForm({ onChange }: PgnUploadFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const form = useForm<FormData>({
@@ -41,7 +42,7 @@ export function PgnUploadForm({ onSubmit, onChange }: PgnUploadFormProps) {
     }
   })
 
-  const handleFieldChange = (name: keyof FormData, value: any) => {
+  const handleFieldChange = (name: keyof FormData, value: string) => {
     if (onChange) {
       onChange({ [name]: value })
     }
@@ -60,8 +61,8 @@ export function PgnUploadForm({ onSubmit, onChange }: PgnUploadFormProps) {
       if (fileInputRef.current) {
         fileInputRef.current.value = ''
       }
-    } catch (error) {
-      console.error('Error reading file:', error)
+    } catch {
+      console.error('Error reading file')
     }
   }
 
@@ -71,7 +72,7 @@ export function PgnUploadForm({ onSubmit, onChange }: PgnUploadFormProps) {
         <FormField
           control={form.control}
           name="pgn"
-          render={({ field }: { field: any }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>PGN</FormLabel>
               <FormControl>
@@ -112,7 +113,7 @@ export function PgnUploadForm({ onSubmit, onChange }: PgnUploadFormProps) {
         <FormField
           control={form.control}
           name="playerColor"
-          render={({ field }: { field: any }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Play as</FormLabel>
               <FormControl>
