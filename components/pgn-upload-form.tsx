@@ -65,6 +65,21 @@ export function PgnUploadForm({ onChange }: PgnUploadFormProps) {
     }
   }
 
+  const openings = [
+    {
+      name: "Ruy Lopez",
+      pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Na5 10. Bc2"
+    },
+    {
+      name: "Sicilian Defense",
+      pgn: "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Be3 e5 7. Nb3 Be6 8. f3 Be7 9. Qd2 O-O 10. O-O-O"
+    },
+    {
+      name: "Nimzo-Indian",
+      pgn: "1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. e3 O-O 5. Bd3 d5 6. Nf3 c5 7. O-O dxc4 8. Bxc4 Nbd7 9. Qe2 b6 10. Rd1"
+    }
+  ]
+
   return (
     <Form {...form}>
       <form className="space-y-6">
@@ -85,6 +100,23 @@ export function PgnUploadForm({ onChange }: PgnUploadFormProps) {
                       handleFieldChange('pgn', e.target.value)
                     }}
                   />
+                  <div className="flex items-center gap-2">
+                    {openings.map((opening) => (
+                      <Button
+                        key={opening.name}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="hover:bg-blue-100 border-blue-300 text-blue-700"
+                        onClick={() => {
+                          form.setValue('pgn', opening.pgn)
+                          handleFieldChange('pgn', opening.pgn)
+                        }}
+                      >
+                        {opening.name}
+                      </Button>
+                    ))}
+                  </div>
                   <div className="flex items-center gap-2">
                     <Input
                       type="file"
