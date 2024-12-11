@@ -7,7 +7,7 @@ import { ErrorBoundary } from '@/components/error-boundary'
 
 export default function Home() {
   return (
-    <main className="container mx-auto px-4 py-4 max-w-4xl">
+    <main className="container mx-auto px-1 py-1 max-w-4xl">
       <Card className="mx-auto w-full">
         <CardHeader className="text-center">
           <CardHeader className="text-center space-y-4 py-8">
