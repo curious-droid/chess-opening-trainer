@@ -16,7 +16,8 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { UploadFormData } from '@/types/chess'
 import { Input } from '@/components/ui/input'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { Switch } from '@/components/ui/switch'
 
 const formSchema = z.object({
   pgn: z.string().min(1, 'PGN is required'),
@@ -32,6 +33,7 @@ interface PgnUploadFormProps {
 
 export function PgnUploadForm({ onChange }: PgnUploadFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [showPgn, setShowPgn] = useState(true)
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -88,18 +90,32 @@ export function PgnUploadForm({ onChange }: PgnUploadFormProps) {
           name="pgn"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>PGN</FormLabel>
+              <div className="flex items-center justify-between">
+                <FormLabel>PGN</FormLabel>
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={showPgn}
+                    onCheckedChange={setShowPgn}
+                    id="show-pgn"
+                  />
+                  <label htmlFor="show-pgn" className="text-sm text-gray-500">
+                    {showPgn ? 'Hide PGN' : 'Show PGN'}
+                  </label>
+                </div>
+              </div>
               <FormControl>
                 <div className="space-y-2">
-                  <Textarea
-                    placeholder="Paste your PGN here..."
-                    className="h-28"
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(e)
-                      handleFieldChange('pgn', e.target.value)
-                    }}
-                  />
+                  {showPgn && (
+                    <Textarea
+                      placeholder="Paste your PGN here..."
+                      className="h-28"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e)
+                        handleFieldChange('pgn', e.target.value)
+                      }}
+                    />
+                  )}
                   <div className="flex items-center gap-2">
                     {openings.map((opening) => (
                       <Button
