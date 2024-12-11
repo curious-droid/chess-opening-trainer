@@ -201,45 +201,53 @@ export function ChessBoard({ gameState, setGameState, isPracticeMode }: ChessBoa
   }
 
   if (isLoading || !currentPosition) {
-    return <div className="w-full pb-[100%] bg-gray-100 animate-pulse" />
+    return (
+      <div className="w-full aspect-square rounded-xl bg-gray-50 animate-pulse flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin" />
+      </div>
+    )
   }
 
   return (
-    <div className="space-y-4">
-      <div className="relative w-full pb-[100%]">
-        <div className="absolute inset-0">
-          <Chessboard
-            position={currentPosition}
-            onPieceDrop={onDrop}
-            boardOrientation={boardOrientation}
-            arePiecesDraggable={isPracticeMode && isPlayerTurn && !gameState?.isGameOver}
-            customBoardStyle={{
-              borderRadius: '4px',
-              boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-            }}
-            customDarkSquareStyle={{ backgroundColor: '#779952' }}
-            customLightSquareStyle={{ backgroundColor: '#edeed1' }}
-          />
-        </div>
+    <div className="space-y-6">
+      <div className="rounded-xl overflow-hidden shadow-2xl">
+        <Chessboard
+          position={currentPosition}
+          onPieceDrop={onDrop}
+          boardOrientation={boardOrientation}
+          arePiecesDraggable={isPracticeMode && isPlayerTurn && !gameState?.isGameOver}
+          customBoardStyle={{
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+          }}
+          customDarkSquareStyle={{ backgroundColor: '#769656' }}
+          customLightSquareStyle={{ backgroundColor: '#eeeed2' }}
+        />
       </div>
       {isPracticeMode && gameState && (
-        <div className="grid grid-cols-2 gap-4 items-start">
-          <div className="space-y-2 text-sm">
-            <div className="grid grid-cols-2 gap-x-4">
-              <p>Correct moves:</p>
-              <p className="font-medium">{gameState.correctMoves}</p>
-              <p>Wrong moves:</p>
-              <p className="font-medium">{gameState.wrongMoves}</p>
-              <p>Current move attempts:</p>
-              <p className="font-medium">{currentAttempts}</p>
-              <p>Progress:</p>
-              <p className="font-medium">{gameState.currentMoveIndex} / {allMoves.length}</p>
+        <div className="rounded-xl bg-white/90 backdrop-blur-sm p-6 border border-gray-100 shadow-lg">
+          <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-6">
+              {[
+                { label: 'Correct moves', value: gameState.correctMoves, color: 'text-emerald-600' },
+                { label: 'Wrong moves', value: gameState.wrongMoves, color: 'text-rose-600' },
+                { label: 'Current attempts', value: currentAttempts, color: 'text-blue-600' },
+                { label: 'Progress', value: `${gameState.currentMoveIndex} / ${allMoves.length}`, color: 'text-gray-700' }
+              ].map(({ label, value, color }) => (
+                <div key={label} className="space-y-1">
+                  <p className="text-sm text-gray-500">{label}</p>
+                  <p className={`text-lg font-semibold ${color}`}>{value}</p>
+                </div>
+              ))}
             </div>
-          </div>
-          <div className="flex justify-end">
-            <Button onClick={handleReset}>
-              {gameState.isGameOver ? 'Start New Training' : 'Reset'}
-            </Button>
+            <div className="flex items-center justify-end">
+              <Button 
+                onClick={handleReset}
+                className="bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-white shadow-md transition-all duration-300"
+              >
+                {gameState.isGameOver ? 'Start New Training' : 'Reset'}
+              </Button>
+            </div>
           </div>
         </div>
       )}

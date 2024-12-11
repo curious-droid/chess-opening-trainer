@@ -93,7 +93,7 @@ export function PgnUploadForm({ onChange }: PgnUploadFormProps) {
                 <div className="space-y-2">
                   <Textarea
                     placeholder="Paste your PGN here..."
-                    className="h-32"
+                    className="h-28"
                     {...field}
                     onChange={(e) => {
                       field.onChange(e)
@@ -145,28 +145,30 @@ export function PgnUploadForm({ onChange }: PgnUploadFormProps) {
           control={form.control}
           name="playerColor"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Play as</FormLabel>
-              <FormControl>
-                <RadioGroup
-                  onValueChange={(value) => {
-                    field.onChange(value)
-                    handleFieldChange('playerColor', value)
-                  }}
-                  defaultValue={field.value}
-                  className="flex space-x-4"
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="w" id="white" />
-                    <label htmlFor="white">White</label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="b" id="black" />
-                    <label htmlFor="black">Black</label>
-                  </div>
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
+            <FormItem className="space-y-0">
+              <div className="flex items-center gap-4">
+                <FormLabel className="shrink-0">Play as</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      handleFieldChange('playerColor', value)
+                    }}
+                    defaultValue={field.value}
+                    className="flex space-x-4"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="w" id="white" />
+                      <label htmlFor="white">White</label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="b" id="black" />
+                      <label htmlFor="black">Black</label>
+                    </div>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </div>
             </FormItem>
           )}
         />

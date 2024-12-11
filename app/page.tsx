@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { GameContainer } from '@/components/game-container'
 import { ErrorBoundary } from '@/components/error-boundary'
 
@@ -10,7 +10,17 @@ export default function Home() {
     <main className="container mx-auto p-4">
       <Card className="mx-auto w-full max-w-4xl">
         <CardHeader className="text-center">
-          <CardTitle>Chess Opening Trainer</CardTitle>
+        <CardHeader className="text-center space-y-4 py-8">
+            <div className="space-y-2">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent">
+                Chess Opening Trainer
+              </h1>
+              <div className="h-1 w-32 mx-auto bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 rounded-full" />
+            </div>
+            <p className="text-gray-600 text-lg max-w-md mx-auto">
+              Master your openings with interactive practice and real-time feedback
+            </p>
+          </CardHeader>
         </CardHeader>
         <CardContent>
           <Suspense fallback={<div>Loading...</div>}>

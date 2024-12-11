@@ -14,30 +14,40 @@ export function LoadOpeningCard({
   isPgnValid 
 }: LoadOpeningCardProps) {
   return (
-    <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4">
-      <h3 className="font-medium mb-2">Load Opening</h3>
-      <div className="space-y-4">
-        <div className="rounded-lg bg-muted p-4 mb-4">
-          <h4 className="font-medium mb-2">Instructions</h4>
-          <ul className="text-sm text-muted-foreground space-y-2">
-            <li>• Upload or paste a PGN file of the opening you want to practice</li>
-            <li>• Choose which color you want to play as</li>
-            <li>• You get 3 attempts for each move</li>
-            <li>• After 3 wrong attempts, the correct move will be shown</li>
-            <li>• Practice until you can complete the opening without mistakes!</li>
+    <div className="rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-gray-100">
+      <div className="p-6 space-y-6">
+        <div className="rounded-xl bg-gray-50/80 p-6 border border-gray-100">
+          <ul className="space-y-3">
+            {[
+              'Upload or paste a PGN file of the opening you want to practice',
+              'Choose which color you want to play as',
+              'You get 3 attempts for each move',
+              'After 3 wrong attempts, the correct move will be shown',
+              'Practice until you can complete the opening without mistakes!'
+            ].map((text, i) => (
+              <li key={i} className="flex gap-3 items-start text-sm text-gray-600">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-white flex items-center justify-center text-xs font-medium text-gray-600 border border-gray-200 shadow-sm">
+                  {i + 1}
+                </span>
+                <span>{text}</span>
+              </li>
+            ))}
           </ul>
         </div>
-        <PgnUploadForm 
-          onSubmit={() => {}} 
-          onChange={onPgnChange}
-        />
-        <Button 
-          onClick={onStartTraining}
-          disabled={!isPgnValid}
-          className="w-full"
-        >
-          Start Training
-        </Button>
+
+        <div className="space-y-4">
+          <PgnUploadForm 
+            onSubmit={() => {}} 
+            onChange={onPgnChange}
+          />
+          <Button 
+            onClick={onStartTraining}
+            disabled={!isPgnValid}
+            className="w-full bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-white shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Start Training
+          </Button>
+        </div>
       </div>
     </div>
   )
