@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Dispatch, SetStateAction, useCallback } from 'react'
 import { Chessboard } from 'react-chessboard'
-import type { Square as ChessboardSquare } from 'react-chessboard/dist/chessboard/types'
+import type { Square as ChessboardSquare, Piece } from 'react-chessboard/dist/chessboard/types'
 import { Chess } from 'chess.js'
 import { Button } from '@/components/ui/button'
 import { GameState } from '@/types/chess'
