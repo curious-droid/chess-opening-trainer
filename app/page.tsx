@@ -8,7 +8,7 @@ import { ErrorBoundary } from '@/components/error-boundary'
 export default function Home() {
   return (
     <main className="container mx-auto p-4">
-      <Card className="mx-auto">
+      <Card className="mx-auto w-full max-w-4xl">
         <CardHeader className="text-center">
           <CardTitle>Chess Opening Trainer</CardTitle>
         </CardHeader>
